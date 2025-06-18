@@ -9,7 +9,7 @@ namespace WALLY_PROJECT.Models
     {
         public int IdCuenta { get; set; }
         public int IdUsuario { get; set; }
-        public string C_TipoCuenta { get; set; }
+        public string C_NUmeroCuenta { get; set; }
         public decimal C_Saldo { get; set; }
         public char C_EstadoCuenta { get; set; }
 
