@@ -46,7 +46,7 @@ namespace WALLY_PROJECT.Controllers
                 if (reader.Read())
                 {
                     string perfil = reader["U_PERFIL"].ToString();
-                    string idUsuario = reader["IdUsuario"].ToString();
+                    string idUsuario = reader["ID_USUARIO"].ToString();
 
                     // Guardar en ViewBag (para usar en la vista actual)
                     ViewBag.perfil = perfil;
@@ -63,11 +63,11 @@ namespace WALLY_PROJECT.Controllers
                     // Redirección basada en perfil
                     if (perfil == "CLIENTE")
                     {
-                        return RedirectToAction("IndexCliente", "Principal");
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Principal");
+                        return RedirectToAction("IndexAdmin", "Home");
                     }
                 }
                 else

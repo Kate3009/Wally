@@ -1,0 +1,99 @@
+﻿@model IEnumerable<WALLY_PROJECT.Models.Usuario>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IdUsuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_TxtUsuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_TxtAcceso)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_FecCreacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_FecModificacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_Nombres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_ApePaterno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_ApeMaterno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_NumIdentidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_Perfil)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.U_Estado)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.IdUsuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_TxtUsuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_TxtAcceso)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_FecCreacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_FecModificacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_Nombres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_ApePaterno)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_ApeMaterno)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_NumIdentidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_Perfil)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.U_Estado)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
