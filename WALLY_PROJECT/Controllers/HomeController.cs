@@ -13,6 +13,11 @@ namespace WALLY_PROJECT.Controllers
             return View();
         }
 
+        public ActionResult IndexAdmin()
+        {
+            return View();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

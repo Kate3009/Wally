@@ -1,4 +1,5 @@
-﻿@{
+﻿@model WALLY_PROJECT.Models.Usuario
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -89,30 +90,37 @@
         <div class="form-container">
             <h1><span>W</span>WALLY</h1>
 
-            <div class="form-group">
-                <label>Ingresa Usuario</label>
-                <input type="text" name="usuario" />
-            </div>
+            @using (Html.BeginForm("IniciarSesion", "Login", FormMethod.Post))
+            {
+                <div class="form-group">
+                    <label>Ingresa Usuario</label>
+                    @Html.TextBoxFor(m => m.U_TxtUsuario, new { @class = "form-control" })
+                </div>
 
-            <div class="form-group">
-                <label>Ingresa Contraseña</label>
-                <input type="password" name="contrasena" />
-            </div>
+                <div class="form-group">
+                    <label>Ingresa Contraseña</label>
+                    @Html.PasswordFor(m => m.U_TxtAcceso, new { @class = "form-control" })
+                </div>
 
-            <div class="form-group">
-                <button type="submit">Ingresar</button>
-            </div>
+                <div class="form-group">
+                    <button type="submit">Ingresar</button>
+                </div>
+            }
+
+            @if (ViewData["Mensaje"] != null)
+            {
+                <p style="color:red">@ViewData["Mensaje"]</p>
+            }
 
             <div class="links">
-                <a href="" style="font-size:small">Recuperar Contraseña</a>
+                <a href="#" style="font-size:small">Recuperar Contraseña</a>
                 <a href="#" style="font-size:small">Crear cuenta</a>
             </div>
         </div>
 
         <div class="image-container">
-            <img src="~/imagenes/Artboard-38.png" alt="" />
+            <img src="~/imagenes/Artboard-38.png" alt="Imagen" />
         </div>
     </div>
 </body>
 </html>
-
