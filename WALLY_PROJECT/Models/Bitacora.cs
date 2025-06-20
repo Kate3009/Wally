@@ -9,12 +9,12 @@ namespace WALLY_PROJECT.Models
     { 
 
 
-    public int IdBitacora { get; set; }
-    public DateTime? W_FecEvento { get; set; }
-    public string W_DescripcionEvento { get; set; }
-    public string W_TipoEvento { get; set; }
-    public int W_UsuarioAfectado { get; set; }
-    public int IdTransaccion { get; set; }
+    public int ID_BITACORA { get; set; }
+    public DateTime? W_FEC_EVENTO { get; set; }
+    public string W_DESCRIPCION_EVENTO { get; set; }
+    public string W_TIPO_EVENTO { get; set; }
+    public int W_USUARIO_AFECTADO { get; set; }
+    public int ID_TRANSACCION { get; set; }
 
 }
 }

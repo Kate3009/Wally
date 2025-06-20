@@ -1,132 +1,112 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using WALLY_PROJECT.Models;
-using System.Configuration;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Web.Mvc;
+using Newtonsoft.Json;
+using WALLY_PROJECT.Models;
 
-namespace WALLY_PROJECT.Controllers
+public class UsuarioController : Controller
 {
-    public class UsuarioController : Controller
+    private readonly string apiUrl = "http://127.0.0.1:5000/usuarios";
+
+    // GET: Usuario
+    public async Task<ActionResult> Index()
     {
-        IEnumerable<Usuario> getUsuario()
+        using (var client = new HttpClient())
         {
-            List<Usuario> lista = new List<Usuario>();
-            using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["wally"].ConnectionString))
+            var response = await client.GetAsync(apiUrl);
+            if (response.IsSuccessStatusCode)
             {
-                SqlCommand cmd = new SqlCommand("USP_LISTAR_USUARIOS", cn);
-
-                cmd.CommandType = CommandType.StoredProcedure;
-                cn.Open();
-
-                SqlDataReader dataReader = cmd.ExecuteReader();
-                while (dataReader.Read())
-                {
-                    lista.Add(new Usuario
-                    {
-                        IdUsuario = dataReader.IsDBNull(0) ? 0 : dataReader.GetInt32(0),
-                        U_TxtUsuario = dataReader.IsDBNull(1) ? "" : dataReader.GetString(1),
-                        U_Nombres = dataReader.IsDBNull(2) ? "" : dataReader.GetString(2),
-                        U_ApePaterno = dataReader.IsDBNull(3) ? "" : dataReader.GetString(3),
-                        U_ApeMaterno = dataReader.IsDBNull(4) ? "" : dataReader.GetString(4),
-                        U_Email = dataReader.IsDBNull(5) ? "" : dataReader.GetString(5),
-                        U_NumIdentidad = dataReader.IsDBNull(6) ? "" : dataReader.GetString(6),
-                        U_Estado = dataReader.IsDBNull(7) ? "" : dataReader.GetString(7)
-                    });
-                }
-                cn.Close();
+                var json = await response.Content.ReadAsStringAsync();
+                var usuarios = JsonConvert.DeserializeObject<List<Usuario>>(json);
+                return View(usuarios);
             }
-            return lista;
+            return View(new List<Usuario>());
         }
+    }
 
-       
-        // GET: Usuario
-        public async Task<ActionResult> Index(int pa = 0)
+    // GET: Usuario/Details/5
+    public async Task<ActionResult> Details(int id)
+    {
+        using (var client = new HttpClient())
         {
-         
-            int filas = 10;
-            int n = getUsuario().Count();
-            int pags = n % filas > 0 ? n / filas + 1 : n / filas;
-            ViewBag.pags = pags;
-            ViewBag.pa = pa;
-            //return View(await Task.Run(() => getLibroConsulta(nomlibro).ToList()));
-            return View(await Task.Run(() => getUsuario().ToList().Skip(pa * filas).Take(filas)));
-        }
-
-        // GET: Usuario/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Usuario/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Usuario/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            var response = await client.GetAsync($"{apiUrl}/{id}");
+            if (response.IsSuccessStatusCode)
             {
-                // TODO: Add insert logic here
+                var json = await response.Content.ReadAsStringAsync();
+                dynamic result = JsonConvert.DeserializeObject(json);
+                var usuario = JsonConvert.DeserializeObject<Usuario>(JsonConvert.SerializeObject(result.cursor));
+                return View(usuario);
+            }
+            return HttpNotFound();
+        }
+    }
 
+    // GET: Usuario/Create
+    public ActionResult Create()
+    {
+        return View();
+    }
+
+    // POST: Usuario/Create
+    [HttpPost]
+    public async Task<ActionResult> Create(Usuario usuario)
+    {
+        using (var client = new HttpClient())
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(usuario), System.Text.Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(apiUrl, content);
+
+            if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+
+            ViewBag.Error = "Error al registrar el usuario.";
+            return View(usuario);
         }
+    }
 
-        // GET: Usuario/Edit/5
-        public ActionResult Edit(int id)
+    // GET: Usuario/Edit/5
+    public async Task<ActionResult> Edit(int id)
+    {
+        return await Details(id); // Reutiliza lógica de Details
+    }
+
+    // POST: Usuario/Edit/5
+    [HttpPost]
+    public async Task<ActionResult> Edit(Usuario usuario)
+    {
+        using (var client = new HttpClient())
         {
-            return View();
-        }
+            var content = new StringContent(JsonConvert.SerializeObject(usuario), System.Text.Encoding.UTF8, "application/json");
+            var response = await client.PutAsync($"{apiUrl}/{usuario.ID_USUARIO}", content);
 
-        // POST: Usuario/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
+            if (response.IsSuccessStatusCode)
                 return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+
+            ViewBag.Error = "Error al actualizar el usuario.";
+            return View(usuario);
         }
+    }
 
-        // GET: Usuario/Delete/5
-        public ActionResult Delete(int id)
+    // PUT: Usuario/Inactivar/5
+    public async Task<ActionResult> Inactivar(int id)
+    {
+        using (var client = new HttpClient())
         {
-            return View();
+            var response = await client.PutAsync($"{apiUrl}/{id}/inactivar", null);
+            return RedirectToAction("Index");
         }
+    }
 
-        // POST: Usuario/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+    // PUT: Usuario/Activar/5
+    public async Task<ActionResult> Activar(int id)
+    {
+        using (var client = new HttpClient())
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var response = await client.PutAsync($"{apiUrl}/{id}/activar", null);
+            return RedirectToAction("Index");
         }
     }
 }

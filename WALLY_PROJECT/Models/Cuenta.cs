@@ -7,11 +7,11 @@ namespace WALLY_PROJECT.Models
 {
     public class Cuenta
     {
-        public int IdCuenta { get; set; }
-        public int IdUsuario { get; set; }
-        public string C_NUmeroCuenta { get; set; }
-        public decimal C_Saldo { get; set; }
-        public char C_EstadoCuenta { get; set; }
+        public int ID_CUENTA { get; set; }
+        public int ID_USUARIO { get; set; }
+        public string C_NUMERO_CUENTA { get; set; }
+        public decimal C_SALDO { get; set; }
+        public char C_ESTADO_CUENTA { get; set; }
 
     }
 }
