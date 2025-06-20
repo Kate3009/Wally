@@ -37,8 +37,8 @@ namespace WALLY_PROJECT.Controllers
         ";
 
                 SqlCommand cmd = new SqlCommand(query, cn);
-                cmd.Parameters.AddWithValue("@usuario", usu.U_TxtUsuario);
-                cmd.Parameters.AddWithValue("@contrasena", usu.U_TxtAcceso);
+                cmd.Parameters.AddWithValue("@usuario", usu.U_TXT_USUARIO);
+                cmd.Parameters.AddWithValue("@contrasena", usu.U_TXT_ACCESO);
 
                 cn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();

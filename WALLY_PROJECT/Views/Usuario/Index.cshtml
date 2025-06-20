@@ -12,40 +12,25 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.IdUsuario)
+            @Html.DisplayNameFor(model => model.ID_USUARIO)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.U_TxtUsuario)
+            @Html.DisplayNameFor(model => model.U_TXT_USUARIO)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.U_TxtAcceso)
+            @Html.DisplayNameFor(model => model.U_FEC_CREACION)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.U_FecCreacion)
+            @Html.DisplayNameFor(model => model.U_NOMBRES)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.U_FecModificacion)
+            @Html.DisplayNameFor(model => model.U_APE_PATERNO)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.U_Nombres)
+            @Html.DisplayNameFor(model => model.U_APE_MATERNO)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.U_ApePaterno)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.U_ApeMaterno)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.U_Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.U_NumIdentidad)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.U_Perfil)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.U_Estado)
+            @Html.DisplayNameFor(model => model.U_EMAIL)
         </th>
         <th></th>
     </tr>
@@ -53,40 +38,25 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.IdUsuario)
+            @Html.DisplayFor(modelItem => item.ID_USUARIO)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.U_TxtUsuario)
+            @Html.DisplayFor(modelItem => item.U_TXT_USUARIO)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.U_TxtAcceso)
+            @Html.DisplayFor(modelItem => item.U_FEC_CREACION)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.U_FecCreacion)
+            @Html.DisplayFor(modelItem => item.U_NOMBRES)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.U_FecModificacion)
+            @Html.DisplayFor(modelItem => item.U_APE_PATERNO)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.U_Nombres)
+            @Html.DisplayFor(modelItem => item.U_APE_MATERNO)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.U_ApePaterno)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.U_ApeMaterno)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.U_Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.U_NumIdentidad)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.U_Perfil)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.U_Estado)
+            @Html.DisplayFor(modelItem => item.U_ESTADO)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
