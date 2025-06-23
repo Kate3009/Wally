@@ -89,24 +89,24 @@ public class UsuarioController : Controller
             return View(usuario);
         }
     }
-
-    // PUT: Usuario/Inactivar/5
+    [HttpPost]
     public async Task<ActionResult> Inactivar(int id)
     {
         using (var client = new HttpClient())
         {
             var response = await client.PutAsync($"{apiUrl}/{id}/inactivar", null);
-            return RedirectToAction("Index");
+            return Json(new { success = response.IsSuccessStatusCode });
         }
     }
 
-    // PUT: Usuario/Activar/5
+    [HttpPost]
     public async Task<ActionResult> Activar(int id)
     {
         using (var client = new HttpClient())
         {
             var response = await client.PutAsync($"{apiUrl}/{id}/activar", null);
-            return RedirectToAction("Index");
+            return Json(new { success = response.IsSuccessStatusCode });
         }
     }
+
 }

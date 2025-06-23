@@ -1,8 +1,10 @@
-﻿
-@{
+﻿@{
     Layout = null;
     ViewBag.Title = "Home Page";
+    var userId = Session["UsuarioId"] != null ? Session["UsuarioId"].ToString() : "0";
+    var perfil = Session["Perfil"] != null ? Session["Perfil"].ToString() : "Cliente";
 }
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -104,19 +106,35 @@
         <h2>¿Qué desea hacer?</h2>
 
         <div class="actions">
-            <div class="action">
-                <img src="https://img.icons8.com/ios-filled/50/000000/edit-user-male.png" alt="Actualizar datos" />
-                <p>Actualizar datos</p>
-            </div>
-            <div class="action">
+            @if (perfil == "ADMIN")
+            {
+                <a href="/Usuario/Index" class="action">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/edit-user-male.png" alt="Editar clientes" />
+                    <p>Editar Clientes</p>
+                </a>
+            }
+            else
+            {
+                <a href="/Usuario/Edit/@userId" class="action">
+                    <img src="https://img.icons8.com/ios-filled/50/000000/edit-user-male.png" alt="Actualizar datos" />
+                    <p>Actualizar datos</p>
+                </a>
+            }
+
+
+            <a href="/Usuario/Details/1" class="action">
+                <!-- Ver cuenta -->
                 <img src="https://img.icons8.com/ios-filled/50/000000/visible.png" alt="Ver cuenta" />
                 <p>Ver Cuenta</p>
-            </div>
-            <div class="action">
+            </a>
+
+            <a href="/Transferencia/Create" class="action">
+                <!-- Crear transferencia -->
                 <img src="https://img.icons8.com/ios-filled/50/000000/money-transfer.png" alt="Hacer transferencia" />
                 <p>Hacer Transferencia</p>
-            </div>
+            </a>
         </div>
+
     </div>
 
 </body>
