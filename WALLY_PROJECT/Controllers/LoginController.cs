@@ -57,18 +57,14 @@ namespace WALLY_PROJECT.Controllers
                     ViewData["IdUsuario"] = idUsuario;
 
                     // Si quieres usarlo después de redirigir (otra vista), usa Session
-                    Session["perfil"] = perfil;
-                    Session["IdUsuario"] = idUsuario;
+                    Session["Perfil"] = perfil;
+                    Session["UsuarioId"] = idUsuario;
 
                     // Redirección basada en perfil
-                    if (perfil == "CLIENTE")
-                    {
+                 
+                    
                         return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        return RedirectToAction("IndexAdmin", "Home");
-                    }
+                    
                 }
                 else
                 {

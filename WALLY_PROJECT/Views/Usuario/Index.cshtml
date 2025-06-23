@@ -1,69 +1,201 @@
 ﻿@model IEnumerable<WALLY_PROJECT.Models.Usuario>
-
 @{
-    ViewBag.Title = "Index";
+    Layout = null;
+    ViewBag.Title = "Usuarios";
 }
 
-<h2>Index</h2>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Lista de Usuarios</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #00cc66; /* fondo verde fuerte */
+        }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ID_USUARIO)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.U_TXT_USUARIO)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.U_FEC_CREACION)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.U_NOMBRES)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.U_APE_PATERNO)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.U_APE_MATERNO)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.U_EMAIL)
-        </th>
-        <th></th>
-    </tr>
+        nav {
+            background-color: #009966;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ID_USUARIO)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.U_TXT_USUARIO)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.U_FEC_CREACION)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.U_NOMBRES)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.U_APE_PATERNO)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.U_APE_MATERNO)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.U_ESTADO)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+            nav .logo {
+                font-weight: bold;
+                font-size: 1.5rem;
+            }
 
-</table>
+            nav .nav-links a {
+                color: white;
+                text-decoration: none;
+                margin-left: 20px;
+                font-weight: bold;
+                transition: color 0.3s;
+            }
+
+                nav .nav-links a:hover {
+                    color: #c8f8e4;
+                }
+
+        .container {
+            background-color: #c8f8e4;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 1200px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #004d33;
+        }
+
+        .create-link {
+            display: block;
+            text-align: right;
+            margin-bottom: 15px;
+        }
+
+            .create-link a {
+                background-color: #009966;
+                color: white;
+                padding: 8px 15px;
+                border-radius: 8px;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #00b377;
+            color: white;
+        }
+
+        td a {
+            margin-right: 8px;
+            color: #007b5e;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+            td a:hover {
+                text-decoration: underline;
+            }
+
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">WALLY</div>
+        <div class="nav-links">
+            <a href="/">Inicio</a>
+            <a href="/Usuario">Usuario</a>
+            <a href="/Transacciones">Transacciones</a>
+            <a href="/Reporte">Reporte</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Lista de Usuarios</h2>
+        <br />
+        <div class="create-link">
+            @Html.ActionLink("Crear nuevo usuario", "Create")
+        </div>
+        <br />
+        <table>
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.ID_USUARIO)</th>
+                    <th>@Html.DisplayNameFor(model => model.U_TXT_USUARIO)</th>
+                    <th>@Html.DisplayNameFor(model => model.U_FEC_CREACION)</th>
+                    <th>@Html.DisplayNameFor(model => model.U_NOMBRES)</th>
+                    <th>@Html.DisplayNameFor(model => model.U_APE_PATERNO)</th>
+                    <th>@Html.DisplayNameFor(model => model.U_APE_MATERNO)</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.ID_USUARIO)</td>
+                        <td>@Html.DisplayFor(modelItem => item.U_TXT_USUARIO)</td>
+                        <td>@Html.DisplayFor(modelItem => item.U_FEC_CREACION)</td>
+                        <td>@Html.DisplayFor(modelItem => item.U_NOMBRES)</td>
+                        <td>@Html.DisplayFor(modelItem => item.U_APE_PATERNO)</td>
+                        <td>@Html.DisplayFor(modelItem => item.U_APE_MATERNO)</td>
+                        <td class="estado-text">
+                            @(item.U_ESTADO?.Trim().ToUpper() == "A" ? "Activo" : "Inactivo")
+                        </td>
+
+                        <td>
+                            <button class="toggle-btn"
+                                    data-id="@item.ID_USUARIO"
+                                    data-estado="@item.U_ESTADO">
+                                @(item.U_ESTADO == "A" ? "Inactivar" : "Activar")
+                            </button>
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.ID_USUARIO }) |
+                            @Html.ActionLink("Detalles", "Details", new { id = item.ID_USUARIO }) |
+                        </td>
+
+
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.toggle-btn').click(function () {
+                const button = $(this);
+                const id = button.data('id');
+                const estadoActual = button.data('estado');
+                const accion = estadoActual === 'A' ? 'inactivar' : 'activar';
+
+                $.ajax({
+                    url: `/Usuario/${accion}/${id}`,
+                    type: 'POST',
+                    success: function () {
+                        // Recargar página para reflejar el cambio
+                        location.reload();
+                    },
+                    error: function () {
+                        alert('Hubo un error al intentar cambiar el estado.');
+                    }
+                });
+            });
+        });
+    </script>
+
+
+</body>
+</html>
+
