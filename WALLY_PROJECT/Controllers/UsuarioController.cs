@@ -43,7 +43,6 @@ public class UsuarioController : Controller
             return HttpNotFound();
         }
     }
-
     // GET: Usuario/Create
     public ActionResult Create()
     {
@@ -52,20 +51,48 @@ public class UsuarioController : Controller
 
     // POST: Usuario/Create
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<ActionResult> Create(Usuario usuario)
     {
+        if (!ModelState.IsValid)
+        {
+            ViewBag.Error = "Hay errores en el formulario. Por favor revisa los campos.";
+            return View(usuario);
+        }
+
         using (var client = new HttpClient())
         {
             var content = new StringContent(JsonConvert.SerializeObject(usuario), System.Text.Encoding.UTF8, "application/json");
-            var response = await client.PostAsync(apiUrl, content);
 
-            if (response.IsSuccessStatusCode)
-                return RedirectToAction("Index");
+            try
+            {
+                var response = await client.PostAsync(apiUrl, content);
+                var responseContent = await response.Content.ReadAsStringAsync();
 
-            ViewBag.Error = "Error al registrar el usuario.";
+                if (response.IsSuccessStatusCode)
+                {
+                    string rol = Session["Rol"]?.ToString().ToUpper() ?? "";
+
+                    if (rol == "ADMIN")
+                    {
+                        return RedirectToAction("Index");
+                    }
+
+                    ViewBag.Success = "La información fue registrada correctamente.";
+                    return View(usuario);
+                }
+
+                ViewBag.Error = "Error al registrar el usuario. Detalle: " + responseContent;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Error de conexión con la API: " + ex.Message;
+            }
+
             return View(usuario);
         }
     }
+
 
     // GET: Usuario/Edit/5
     public async Task<ActionResult> Edit(int id)
@@ -73,7 +100,6 @@ public class UsuarioController : Controller
         return await Details(id); // Reutiliza lógica de Details
     }
 
-    // POST: Usuario/Edit/5
     [HttpPost]
     public async Task<ActionResult> Edit(Usuario usuario)
     {
@@ -83,12 +109,27 @@ public class UsuarioController : Controller
             var response = await client.PutAsync($"{apiUrl}/{usuario.ID_USUARIO}", content);
 
             if (response.IsSuccessStatusCode)
-                return RedirectToAction("Index");
+            {
+                string rol = Session["Rol"] != null ? Session["Rol"].ToString().ToUpper() : "";
+
+                if (rol == "ADMIN")
+                {
+                    // Redirige a la lista de usuarios
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    // Muestra el mismo formulario con mensaje de éxito
+                    ViewBag.Success = "La información fue actualizada correctamente.";
+                    return View(usuario);
+                }
+            }
 
             ViewBag.Error = "Error al actualizar el usuario.";
             return View(usuario);
         }
     }
+
     [HttpPost]
     public async Task<ActionResult> Inactivar(int id)
     {
