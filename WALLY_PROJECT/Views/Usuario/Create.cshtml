@@ -19,48 +19,55 @@
         }
 
         .container {
-            background-color: white;
+            background-color: #e0fce0;
+            padding: 40px;
+            border-radius: 20px;
             margin-top: 50px;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            max-width: 800px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 850px;
         }
 
         h2 {
-            color: #009966;
-            text-align: center;
-            margin-bottom: 30px;
+            color: #006400;
         }
 
-        .btn-primary {
+        .form-label {
+            font-weight: bold;
+            color: #006400;
+        }
+
+        .btn-success {
             background-color: #009966;
             border-color: #009966;
         }
 
-            .btn-primary:hover {
+            .btn-success:hover {
                 background-color: #007f5f;
             }
 
-        .form-control:focus {
-            border-color: #00b377;
-            box-shadow: 0 0 0 0.2rem rgba(0,179,119,0.25);
+        .btn-default {
+            background-color: #cccccc;
+            color: #333;
+        }
+
+        .alert {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <h2>Crear Usuario</h2>
+        <h2 class="text-center">Crear nuevo usuario</h2>
 
+        @* Mensajes de éxito o error *@
         @if (ViewBag.Success != null)
         {
-            <div class="alert alert-success">@ViewBag.Success</div>
+            <div class="alert alert-success text-center">@ViewBag.Success</div>
         }
 
         @if (ViewBag.Error != null)
         {
-            <div class="alert alert-danger">@ViewBag.Error</div>
+            <div class="alert alert-danger text-center">@ViewBag.Error</div>
         }
 
         @using (Html.BeginForm())
@@ -69,52 +76,62 @@
             @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
             <div class="mb-3">
-                @Html.LabelFor(model => model.U_TXT_USUARIO)
-                @Html.TextBoxFor(model => model.U_TXT_USUARIO, new { @class = "form-control" })
+                @Html.LabelFor(m => m.U_TXT_USUARIO, htmlAttributes: new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.U_TXT_USUARIO, new { @class = "form-control", placeholder = "Nombre de usuario" })
             </div>
 
             <div class="mb-3">
-                @Html.LabelFor(model => model.U_TXT_ACCESO)
-                @Html.PasswordFor(model => model.U_TXT_ACCESO, new { @class = "form-control" })
+                @Html.LabelFor(m => m.U_TXT_ACCESO, htmlAttributes: new { @class = "form-label" })
+                @Html.PasswordFor(m => m.U_TXT_ACCESO, new { @class = "form-control", placeholder = "Contraseña" })
             </div>
 
             <div class="mb-3">
-                @Html.LabelFor(model => model.U_NOMBRES)
-                @Html.TextBoxFor(model => model.U_NOMBRES, new { @class = "form-control" })
+                <label class="form-label">Confirmar Contraseña</label>
+                <input type="password" name="ConfirmPassword" class="form-control" placeholder="Confirmar contraseña" required />
+                @if (ViewBag.PasswordMismatch != null)
+                {
+                    <span class="text-danger">@ViewBag.PasswordMismatch</span>
+                }
             </div>
 
             <div class="mb-3">
-                @Html.LabelFor(model => model.U_APE_PATERNO)
-                @Html.TextBoxFor(model => model.U_APE_PATERNO, new { @class = "form-control" })
+                @Html.LabelFor(m => m.U_NOMBRES, htmlAttributes: new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.U_NOMBRES, new { @class = "form-control", placeholder = "Nombres" })
             </div>
 
             <div class="mb-3">
-                @Html.LabelFor(model => model.U_APE_MATERNO)
-                @Html.TextBoxFor(model => model.U_APE_MATERNO, new { @class = "form-control" })
+                @Html.LabelFor(m => m.U_APE_PATERNO, htmlAttributes: new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.U_APE_PATERNO, new { @class = "form-control", placeholder = "Apellido paterno" })
             </div>
 
             <div class="mb-3">
-                @Html.LabelFor(model => model.U_EMAIL)
-                @Html.TextBoxFor(model => model.U_EMAIL, new { @class = "form-control" })
+                @Html.LabelFor(m => m.U_APE_MATERNO, htmlAttributes: new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.U_APE_MATERNO, new { @class = "form-control", placeholder = "Apellido materno" })
             </div>
 
             <div class="mb-3">
-                @Html.LabelFor(model => model.U_NUM_IDENTIDAD)
-                @Html.TextBoxFor(model => model.U_NUM_IDENTIDAD, new { @class = "form-control" })
+                @Html.LabelFor(m => m.U_EMAIL, htmlAttributes: new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.U_EMAIL, new { @class = "form-control", placeholder = "Correo electrónico" })
+            </div>
+
+            <div class="mb-3">
+                @Html.LabelFor(m => m.U_NUM_IDENTIDAD, htmlAttributes: new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.U_NUM_IDENTIDAD, new { @class = "form-control", placeholder = "DNI / Identidad" })
             </div>
 
             <div class="d-flex justify-content-between">
-                <input type="submit" value="Crear" class="btn btn-primary" />
+                <input type="submit" value="Crear" class="btn btn-success px-4" />
+
                 @if (rol == "ADMIN")
                 {
-                    <a href="@Url.Action("Index", "Usuario")" class="btn btn-secondary">Volver</a>
+                    <a href="@Url.Action("Index", "Usuario")" class="btn btn-default px-4">Volver</a>
                 }
                 else
                 {
-                    <a href="@Url.Action("IniciarSesion", "Login")" class="btn btn-secondary">Volver</a>
+                    <a href="@Url.Action("IniciarSesion", "Login")" class="btn btn-default px-4">Volver</a>
                 }
             </div>
         }
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.b
+</body>
+</html>

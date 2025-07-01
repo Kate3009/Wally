@@ -1,0 +1,130 @@
+﻿@model WALLY_PROJECT.Models.Transaccion
+
+@{
+    Layout = null;
+    ViewBag.Title = "Transferencia";
+}
+
+<style>
+    nav {
+        background-color: #009966;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+    }
+
+        nav .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        nav .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+            nav .nav-links a:hover {
+                color: #c8f8e4;
+            }
+</style>
+<!-- NAVBAR -->
+<nav>
+    <div class="logo">WALLY</div>
+    <div class="nav-links">
+        <a href="/">Inicio</a>
+        <a href="/Usuario">Usuario</a>
+        <a href="/Transacciones">Transacciones</a>
+    </div>
+</nav>
+<h2 class="text-success text-center">Transferencia de Fondos</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @if (ViewBag.Success != null)
+        {
+            <div class="alert alert-success">@ViewBag.Success</div>
+        }
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">@ViewBag.Error</div>
+        }
+
+        <div class="form-group">
+            @Html.Label("Cuenta Origen", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" class="form-control" value="@ViewBag.NumeroCuenta" readonly />
+                @Html.HiddenFor(m => m.T_CUENTA_ORIGEN) <!-- Este sigue mandando el ID de cuenta -->
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Buscar Usuario</label>
+            <div class="col-md-10">
+                <input type="text" id="busquedaUsuario" class="form-control" placeholder="Buscar por nombre o email" />
+                <ul id="sugerencias" class="list-group"></ul>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Usuario Seleccionado</label>
+            <div class="col-md-10">
+                <input type="text" id="nombreCompleto" class="form-control" disabled />
+                @Html.HiddenFor(m => m.T_CUENTA_DESTINO, new { id = "T_CUENTA_DESTINO" })
+                @Html.ValidationMessageFor(m => m.T_CUENTA_DESTINO, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.T_MONTO, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(m => m.T_MONTO, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.T_DETALLE, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => m.T_DETALLE, new { @class = "form-control", rows = 3 })
+            </div>
+        </div>
+
+        <div class="form-group text-center">
+            <input type="submit" value="Transferir" class="btn btn-success" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        document.getElementById("busquedaUsuario").addEventListener("input", async function () {
+            const query = this.value;
+            if (query.length < 2) return;
+
+            const response = await fetch('/Usuario/Buscar?q=' + query);
+            const data = await response.json();
+
+            const sugerencias = document.getElementById("sugerencias");
+            sugerencias.innerHTML = "";
+            data.forEach(usuario => {
+                const li = document.createElement("li");
+                li.classList.add("list-group-item");
+                li.textContent = usuario.nombre_completo + ' (' + usuario.usuario + ')';
+                li.addEventListener("click", function () {
+                    document.getElementById("nombreCompleto").value = usuario.nombre_completo;
+                    document.getElementById("T_CUENTA_DESTINO").value = usuario.id;
+                    sugerencias.innerHTML = "";
+                });
+                sugerencias.appendChild(li);
+            });
+        });
+    </script>
+}
