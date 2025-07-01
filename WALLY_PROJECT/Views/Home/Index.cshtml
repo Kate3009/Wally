@@ -84,7 +84,7 @@
             }
 
             .action img {
-                width: 40px;
+                width: 70px;
                 margin-bottom: 10px;
             }
 
@@ -92,17 +92,24 @@
                 margin: 0;
                 font-weight: bold;
             }
+
+            a{
+                text-decoration:none;
+                font-size:20px;
+            }
     </style>
 </head>
 <body>
 
     <div class="header">
         <div class="logo">W</div>
-        <a href="#">Cerrar sesión</a>
+        <h2>Hola @(Session["NombreUsuario"] ?? "Invitado")</h2>
+
+        <a href="~/Views/Login/IniciarSesion.cshtml">Cerrar sesión</a>
     </div>
 
     <div class="main">
-        <h1>Bienvenido a tu billetera digital <strong>VISTA</strong></h1>
+        <h1>Bienvenido a tu billetera digital <strong>WALLY</strong></h1>
         <h2>¿Qué desea hacer?</h2>
 
         <div class="actions">
