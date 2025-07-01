@@ -12,14 +12,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Billetera Digital VISTA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <style>
+
         body {
-            width: 100%;
-            height: 100%;
             margin: 0;
             font-family: 'Segoe UI', sans-serif;
-            background-color: #e6f2ed;
+            background-color: #00cc66; /* fondo verde fuerte */
         }
+
 
         .header {
             background-color: #00b377;
@@ -93,19 +96,20 @@
                 font-weight: bold;
             }
 
-            a{
-                text-decoration:none;
-                font-size:20px;
-            }
+        a {
+            text-decoration: none;
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
+
 
     <div class="header">
         <div class="logo">W</div>
         <h2>Hola @(Session["NombreUsuario"] ?? "Invitado")</h2>
 
-        <a href="~/Views/Login/IniciarSesion.cshtml">Cerrar sesión</a>
+        <a href="/Login/IniciarSesion">Cerrar sesión</a>
     </div>
 
     <div class="main">
@@ -116,8 +120,8 @@
             @if (perfil == "ADMIN")
             {
                 <a href="/Usuario/Index" class="action">
-                    <img src="https://img.icons8.com/ios-filled/50/000000/edit-user-male.png" alt="Editar clientes" />
-                    <p>Editar Clientes</p>
+                    <img src="https://img.icons8.com/ios-filled/50/000000/edit-user-male.png" alt="Clientes" />
+                    <p>Clientes</p>
                 </a>
             }
             else
@@ -128,20 +132,37 @@
                 </a>
             }
 
+            @if (perfil == "ADMIN")
+            {
+                <a href="/Cuenta/Detalle" class="action">
+                    <!-- Ver cuenta -->
+                    <img src="https://img.icons8.com/ios-filled/50/000000/visible.png" alt="Cuentas" />
+                    <p>Cuentas</p>
+                </a>
+            }
+            else
+            {
+                <a href="/Cuenta/Detalle" class="action">
+                    <!-- Ver cuenta -->
+                    <img src="https://img.icons8.com/ios-filled/50/000000/visible.png" alt="Ver cuenta" />
+                    <p>Ver Cuenta</p>
+                </a>
 
-            <a href="/Usuario/Details/1" class="action">
-                <!-- Ver cuenta -->
-                <img src="https://img.icons8.com/ios-filled/50/000000/visible.png" alt="Ver cuenta" />
-                <p>Ver Cuenta</p>
-            </a>
+            }
 
-            <a href="/Transferencia/Create" class="action">
-                <!-- Crear transferencia -->
-                <img src="https://img.icons8.com/ios-filled/50/000000/money-transfer.png" alt="Hacer transferencia" />
-                <p>Hacer Transferencia</p>
-            </a>
+            @if (perfil == "ADMIN")
+            {
+
+            }
+            else
+            {
+                <a href="/Transferencia/Create" class="action">
+                    <!-- Crear transferencia -->
+                    <img src="https://img.icons8.com/ios-filled/50/000000/money-transfer.png" alt="Hacer transferencia" />
+                    <p>Hacer Transferencia</p>
+                </a>
+            }
         </div>
-
     </div>
 
 </body>

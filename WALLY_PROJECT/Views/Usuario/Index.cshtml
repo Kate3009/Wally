@@ -2,6 +2,8 @@
 @{
     Layout = null;
     ViewBag.Title = "Usuarios";
+    var userId = Session["UsuarioId"] != null ? Session["UsuarioId"].ToString() : "0";
+    var perfil = Session["Perfil"] != null ? Session["Perfil"].ToString() : "Cliente";
 }
 
 <!DOCTYPE html>
@@ -111,9 +113,8 @@
     <nav>
         <div class="logo">WALLY</div>
         <div class="nav-links">
-            <a href="/">Inicio</a>
-            <a href="/Usuario">Usuario</a>
-            <a href="/Transacciones">Transacciones</a>
+           
+            <a href="/Login/IniciarSesion">Cerrar Sesión</a>
         </div>
     </nav>
 

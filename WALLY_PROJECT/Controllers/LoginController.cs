@@ -18,11 +18,11 @@ public class LoginController : Controller
         using (SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["wally"].ConnectionString))
         {
             string query = @"
-            SELECT id_usuario, U_PERFIL, U_NOMBRES, U_APE_PATERNO, U_APE_MATERNO
-            FROM W_USUARIO
-            WHERE U_TXT_USUARIO = @usuario 
-              AND U_TXT_ACCESO = @contrasena 
-              AND U_ESTADO = 'A'";
+                SELECT id_usuario, U_PERFIL, U_NOMBRES, U_APE_PATERNO, U_APE_MATERNO
+                FROM W_USUARIO
+                WHERE U_TXT_USUARIO = @usuario 
+                  AND U_TXT_ACCESO = @contrasena 
+                  AND U_ESTADO = 'A'";
 
             SqlCommand cmd = new SqlCommand(query, cn);
             cmd.Parameters.AddWithValue("@usuario", usu.U_TXT_USUARIO);
@@ -37,9 +37,20 @@ public class LoginController : Controller
                 string perfil = reader["U_PERFIL"].ToString();
                 string nombreCompleto = $"{reader["U_NOMBRES"]} {reader["U_APE_PATERNO"]} {reader["U_APE_MATERNO"]}";
 
-                reader.Close(); // Cerramos antes de ejecutar otra consulta
+                reader.Close();
 
-                // Obtener la cuenta del usuario
+                // Guardar datos comunes en sesión
+                Session["UsuarioId"] = idUsuario;
+                Session["Perfil"] = perfil;
+                Session["NombreUsuario"] = nombreCompleto;
+
+                // Si es ADMIN, no validamos cuenta
+                if (perfil == "ADMIN")
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                // Si no es ADMIN, verificar que tenga una cuenta asociada
                 string cuentaQuery = "SELECT TOP 1 ID_CUENTA, C_NUMERO_CUENTA FROM W_CUENTA WHERE ID_USUARIO = @idUsuario";
                 SqlCommand cuentaCmd = new SqlCommand(cuentaQuery, cn);
                 cuentaCmd.Parameters.AddWithValue("@idUsuario", idUsuario);
@@ -48,9 +59,6 @@ public class LoginController : Controller
 
                 if (cuentaReader.Read())
                 {
-                    Session["UsuarioId"] = idUsuario;
-                    Session["Perfil"] = perfil;
-                    Session["NombreUsuario"] = nombreCompleto;
                     Session["NCuenta"] = cuentaReader["ID_CUENTA"];
                     Session["NumeroCuenta"] = cuentaReader["C_NUMERO_CUENTA"].ToString();
 
@@ -69,6 +77,4 @@ public class LoginController : Controller
             }
         }
     }
-
 }
-    
