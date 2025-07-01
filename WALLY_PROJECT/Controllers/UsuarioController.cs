@@ -72,17 +72,28 @@ namespace WALLY_PROJECT.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    TempData["Mensaje"] = "✅ Usuario registrado correctamente.";
-                    return RedirectToAction("Index"); // O donde desees redirigir después del registro
+                    TempData["Mensaje"] = "Usuario registrado correctamente.";
+
+                    if (usuario.U_PERFIL != null && usuario.U_PERFIL.ToUpper() == "ADMIN")
+                    {
+                        // Redirige a Index si es ADMIN
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        // Redirige a inicio de sesión si es CLIENTE u otro perfil
+                        return RedirectToAction("IniciarSesion", "Login");
+                    }
                 }
                 else
                 {
                     var error = await response.Content.ReadAsStringAsync();
-                    ViewBag.Error = "❌ Error al registrar el usuario: " + error;
+                    ViewBag.Error = " Error al registrar el usuario: " + error;
                     return View(usuario);
                 }
             }
         }
+
 
 
 

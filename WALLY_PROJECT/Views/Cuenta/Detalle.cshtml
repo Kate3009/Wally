@@ -1,0 +1,117 @@
+﻿@model WALLY_PROJECT.Models.CuentaUsuario
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Lista de Usuarios</title>
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .card {
+            width: 60%;
+            height: 500px;
+            background: #00b377;
+            border-radius: 16px;
+            padding: 24px;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 50px auto;
+            box-shadow: 0px 6px 18px rgba(0,0,0,0.3);
+        }
+
+            .card h2 {
+                margin: auto;
+                font-size: 50px;
+                text-transform: uppercase;
+            }
+
+            .card p {
+                font-size: 14px;
+                margin: 4px 0;
+            }
+
+        .numero {
+            font-size: 40px;
+            letter-spacing: 1.5px;
+            margin-top: 15px;
+        }
+
+        .saldo {
+            font-size: 40px;
+            font-weight: bold;
+            margin-top: 12px;
+        }
+
+        .letras {
+            width: 100%;
+            margin: auto;
+            padding: 60px;
+        }
+
+        .email {
+            font-size: 40px;
+            font-weight: bold;
+            margin-top: 12px;
+        }
+
+        nav {
+            background-color: #009966;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+            nav .logo {
+                font-weight: bold;
+                font-size: 1.5rem;
+            }
+
+            nav .nav-links a {
+                color: white;
+                text-decoration: none;
+                margin-left: 20px;
+                font-weight: bold;
+                transition: color 0.3s;
+            }
+
+                nav .nav-links a:hover {
+                    color: #c8f8e4;
+                }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #00cc66; /* fondo verde fuerte */
+        }
+    </style>
+</head>
+    <body>
+        <!-- NAVBAR -->
+        <nav>
+            <div class="logo">WALLY</div>
+            <div class="nav-links">
+                <a href="/Login/IniciarSesion">Cerrar Sesión</a>
+            </div>
+        </nav>
+        <div class="card">
+            <div class="letras">
+                <h2>@Model.Usuario.U_NOMBRES @Model.Usuario.U_APE_PATERNO @Model.Usuario.U_APE_MATERNO</h2>
+                <h3 class="email">Email: @Model.Usuario.U_EMAIL</h3>
+                <h3 class="numero">Cuenta: @Model.Cuenta.C_NUMERO_CUENTA</h3>
+                <h3 class="saldo">Saldo: $@Model.Cuenta.C_SALDO</h3>
+
+            </div>
+
+        </div>
+        <div>
+            <a class="btn btn-dark" style="margin-left:50px;margin-bottom:50px" href="@Url.Action("Index","Home")">Volver</a>
+
+        </div>
+
+</body>
+</html>
