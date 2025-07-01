@@ -90,29 +90,30 @@
         }
     </style>
 </head>
-    <body>
-        <!-- NAVBAR -->
-        <nav>
-            <div class="logo">WALLY</div>
-            <div class="nav-links">
-                <a href="/Login/IniciarSesion">Cerrar Sesión</a>
-            </div>
-        </nav>
-        <div class="card">
-            <div class="letras">
-                <h2>@Model.Usuario.U_NOMBRES @Model.Usuario.U_APE_PATERNO @Model.Usuario.U_APE_MATERNO</h2>
-                <h3 class="email">Email: @Model.Usuario.U_EMAIL</h3>
-                <h3 class="numero">Cuenta: @Model.Cuenta.C_NUMERO_CUENTA</h3>
-                <h3 class="saldo">Saldo: $@Model.Cuenta.C_SALDO</h3>
-
-            </div>
+<body>
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">WALLY</div>
+        <div class="nav-links">
+            <a href="/Login/IniciarSesion">Cerrar Sesión</a>
+        </div>
+    </nav>
+    <div class="card">
+        <div class="letras">
+            <h2>@Model.Usuario.U_NOMBRES @Model.Usuario.U_APE_PATERNO @Model.Usuario.U_APE_MATERNO</h2>
+            <h3 class="email">Email: @Model.Usuario.U_EMAIL</h3>
+            <h3 class="numero">Cuenta: @Model.Cuenta.C_NUMERO_CUENTA</h3>
+            <h3 class="saldo">Saldo: S/.@Model.Cuenta.C_SALDO</h3>
 
         </div>
-        <div>
-            <a class="btn btn-dark" style="margin-left:50px;margin-bottom:50px" href="@Url.Action("Index","Home")">Volver</a>
-            <!-- boton ytransferencias -->
-            <!--<a class="btn btn-dark" style="margin-left:50px;margin-bottom:50px" href="@Url.Action("Listado","Transferencia")">Ver Transferencias</a> -->
-        </div>
+
+    </div>
+    <div style="margin-left:50px;margin-bottom:50px">
+        <a class="btn btn-dark btn-lg"  href="@Url.Action("Index","Home")">Volver</a>
+        <a class="btn btn-light btn-lg" href="@Url.Action("Historial", "Transferencia", new { id = Model.Usuario.ID_USUARIO })">
+            Ver Historial de Transferencias
+        </a>
+    </div>
 
 </body>
 </html>

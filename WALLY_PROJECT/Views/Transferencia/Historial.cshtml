@@ -1,0 +1,111 @@
+﻿@model List<WALLY_PROJECT.Models.Transaccion>
+
+@{ var perfil = Session["Perfil"] != null ? Session["Perfil"].ToString() : "Cliente";
+    var cuentaDelUsuario = ViewBag.CuentaDelUsuario as string;
+}
+
+
+    
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Lista de Usuarios</title>
+
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #00cc66; /* fondo verde fuerte */
+        }
+
+        nav {
+            background-color: #009966;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+            nav .logo {
+                font-weight: bold;
+                font-size: 1.5rem;
+            }
+
+            nav .nav-links a {
+                color: white;
+                text-decoration: none;
+                margin-left: 20px;
+                font-weight: bold;
+                transition: color 0.3s;
+            }
+
+                nav .nav-links a:hover {
+                    color: #c8f8e4;
+                }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">WALLY</div>
+        <div class="nav-links">
+
+            <a href="/Login/IniciarSesion">Cerrar Sesión</a>
+        </div>
+    </nav>
+
+    <div class="container mt-4 bg-white p-4 rounded shadow">
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">@ViewBag.Error</div>
+        }
+        else if (!Model.Any())
+        {
+            <div class="alert alert-warning">Este usuario no tiene transferencias registradas.</div>
+        }
+        else
+        {
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Cuenta Origen</th>
+                        <th>Cuenta Destino</th>
+                        <th>Monto</th>
+                        <th>Fecha</th>
+                        <th>Detalle</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var esRecibido = item.T_CUENTA_DESTINO == cuentaDelUsuario;
+                        <tr style="background-color:@(esRecibido ? "#d4edda" : "#f8d7da")">
+                            <td>@item.T_CUENTA_ORIGEN</td>
+                            <td>@item.T_CUENTA_DESTINO</td>
+                            <td>S/.@item.T_MONTO.ToString("F2")</td>
+                            <td>@item.T_FEC_TRANSACCION.ToString("g")</td>
+                            <td>@item.T_DETALLE</td>
+                            <td>@item.T_ESTADO_TRANSACCION</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        @if (perfil == "ADMIN")
+        {
+            <a class="btn btn-dark" style="margin-left:50px;margin-bottom:50px" href="@Url.Action("Index", "Usuario")">Volver</a>
+        }
+        else
+        {
+            <a class="btn btn-dark" style="margin-left:50px;margin-bottom:50px" href="@Url.Action("Detalle", "Cuenta")">Volver</a>
+        }
+    </div>
+</body>
+</html>
+
+
