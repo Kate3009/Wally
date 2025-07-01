@@ -59,7 +59,7 @@ public class LoginController : Controller
 
                 if (cuentaReader.Read())
                 {
-                    Session["NCuenta"] = cuentaReader["ID_CUENTA"];
+                    Session["NCuenta"] = cuentaReader["ID_CUENTA"].ToString();
                     Session["NumeroCuenta"] = cuentaReader["C_NUMERO_CUENTA"].ToString();
 
                     return RedirectToAction("Index", "Home");

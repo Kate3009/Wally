@@ -15,11 +15,11 @@ namespace WALLY_PROJECT.Models
         [Display(Name = "Fecha")]
         public DateTime T_FEC_TRANSACCION { get; set; }
         [Display(Name = "Cuenta Origen")]
-        public int T_CUENTA_ORIGEN { get; set; }
+        public string T_CUENTA_ORIGEN { get; set; }
         [Display(Name = "Cuenta Destino")]
-        public int T_CUENTA_DESTINO { get; set; }
+        public string T_CUENTA_DESTINO { get; set; }
         [Display(Name = "Estado")]
-        public char T_ESTADO_TRANSACCION { get; set; }
+        public string T_ESTADO_TRANSACCION { get; set; }
         [Display(Name = "Detalle")]
         public string T_DETALLE { get; set; }
     }

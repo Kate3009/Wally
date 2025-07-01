@@ -84,3 +84,6 @@ C:\Users\dayan\source\repos\WallyApp\WALLY_PROJECT\obj\Debug\WALLY_PROJECT.cspro
 C:\Users\dayan\source\repos\WallyApp\WALLY_PROJECT\obj\Debug\WALLY_PROJECT.csproj.CopyComplete
 C:\Users\dayan\source\repos\WallyApp\WALLY_PROJECT\obj\Debug\WALLY_PROJECT.dll
 C:\Users\dayan\source\repos\WallyApp\WALLY_PROJECT\obj\Debug\WALLY_PROJECT.pdb
+C:\Users\dayan\source\repos\WallyApp\WALLY_PROJECT\bin\BouncyCastle.Crypto.dll
+C:\Users\dayan\source\repos\WallyApp\WALLY_PROJECT\bin\itextsharp.dll
+C:\Users\dayan\source\repos\WallyApp\WALLY_PROJECT\bin\itextsharp.xml
